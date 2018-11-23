@@ -20,7 +20,7 @@
 <body>
 
 <div class="container">
-    <%@ include file="../jsp/menubar.jsp" %>
+    <%@ include file="templates/menubar.jsp" %>
 
 </div>
 
@@ -41,7 +41,7 @@
         </tr>
     </table>
 
-    <%@ include file="../jsp/footer.jsp" %>
+    <%@ include file="templates/footer.jsp" %>
 </div>
 
 </body>

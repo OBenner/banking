@@ -24,7 +24,7 @@
 <div class="container">
 
 
-        <%@ include file="../jsp/menubar.jsp" %>
+        <%@ include file="templates/menubar.jsp" %>
 
 
 <table class="table table-striped table-hover">
@@ -48,6 +48,7 @@
 
 </table>
 
+    <%@ include file="templates/footer.jsp" %>
 </div>
 </body>
 </html>

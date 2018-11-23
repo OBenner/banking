@@ -23,7 +23,7 @@
 
 <div class="container">
 
-    <%@ include file="../jsp/menubar.jsp" %>
+    <%@ include file="templates/menubar.jsp" %>
 
     <!-- Register new account news -->
     <c:if test="${pageContext.request.userPrincipal.name == null}">
@@ -52,7 +52,7 @@
 
     </c:if>
 
-    <%@ include file="../jsp/footer.jsp" %>
+    <%@ include file="templates/footer.jsp" %>
 </div> <!-- /container -->
 
 

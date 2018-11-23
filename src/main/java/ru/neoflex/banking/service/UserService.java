@@ -6,11 +6,12 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ru.neoflex.banking.dao.UserDao;
 import ru.neoflex.banking.model.User;
 
-@Component
-public class SpringSecurityUserContext  {
+@Service
+public class UserService {
 
     @Autowired
     private UserDao userDao;

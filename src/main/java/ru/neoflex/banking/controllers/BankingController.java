@@ -1,14 +1,11 @@
 package ru.neoflex.banking.controllers;
 
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import jdk.nashorn.api.scripting.URLReader;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
@@ -17,26 +14,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 import ru.neoflex.banking.model.Currency;
 import ru.neoflex.banking.model.User;
-import ru.neoflex.banking.service.SpringSecurityUserContext;
+import ru.neoflex.banking.service.CurrencyService;
+import ru.neoflex.banking.service.UserService;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.Paths;
-import java.security.Principal;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Controller
 public class BankingController {
@@ -45,11 +30,10 @@ public class BankingController {
     @Autowired
     JdbcUserDetailsManager jdbcUserDetailsManager;
     @Autowired
-    SpringSecurityUserContext context;
-//	@RequestMapping("/")
-//	public ModelAndView log() {
-//		return new ModelAndView("redirect:/welcome");
-//	}
+    UserService context;
+
+    @Autowired
+    private CurrencyService currencyService;
 
     @RequestMapping("/")
     public String log() {
@@ -134,24 +118,7 @@ public class BankingController {
 
     @RequestMapping("/currency")
     public String getCurrencyList(Model model) throws IOException {
-
-
-        ObjectReader mapper = new ObjectMapper().readerFor(JsonNode.class);
-        JsonNode rootNode = mapper.readValue(new URLReader(new URL("https://www.cbr-xml-daily.ru/daily_json.js")));
-
-        List<Currency> currencyList = new ArrayList<>();
-        JsonNode nameNode = rootNode.get("Valute");
-        for (JsonNode child : nameNode) {
-            Currency currency = new Currency();
-            currency.setСode(child.get("CharCode").asText());
-            currency.setValue(child.get("Value").doubleValue());
-            currency.setNominal(child.get("Nominal").asLong());
-            currency.setName(child.get("Name").textValue());
-
-            currencyList.add(currency);
-
-        }
-
+        List<Currency> currencyList = currencyService.getCurrencyFromApi();
         //currencyList.forEach(l -> System.out.println(l));
         model.addAttribute(currencyList);
         return "currency";

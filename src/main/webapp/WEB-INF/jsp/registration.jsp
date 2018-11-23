@@ -25,7 +25,7 @@
 
 
 <div class="container">
-	<%@ include file="../jsp/menubar.jsp" %>
+	<%@ include file="templates/menubar.jsp" %>
 
 
 
@@ -56,6 +56,8 @@
 				</div>
 
 			</form:form>
+
+		<%@ include file="templates/footer.jsp" %>
 	</div>
 
 

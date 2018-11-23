@@ -24,7 +24,7 @@
 <div class="container">
 
 
-		<%@ include file="../jsp/menubar.jsp" %>
+		<%@ include file="templates/menubar.jsp" %>
 
 
 	<div class="col">
@@ -51,6 +51,7 @@
 			<%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />--%>
 		</form>
 	</div> <!-- /container -->
+	<%@ include file="templates/footer.jsp" %>
 </div>
 
 </body>

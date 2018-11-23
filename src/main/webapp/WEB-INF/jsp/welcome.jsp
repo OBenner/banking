@@ -97,7 +97,7 @@ body {
 		</div><!--/.container-fluid -->
 	</nav>
 
-
+	<%@ include file="templates/footer.jsp" %>
 
 </div>
 
