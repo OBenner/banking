@@ -18,8 +18,8 @@
             <ul class="nav navbar-nav">
                 <li class="active"><a href="#">Home</a></li>
                 <li><a href="#">About</a></li>
-                <li><a href="/currency">Contact</a></li>
-
+                <li><a href="#">Contact</a></li>
+                <li><a href="/currency">Currency List</a></li>
 
                 <c:if test="${pageContext.request.userPrincipal.name != null}">
                     <li class="dropdown">

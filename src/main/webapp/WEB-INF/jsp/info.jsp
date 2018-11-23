@@ -40,6 +40,8 @@
             <td>${email}</td>
         </tr>
     </table>
+
+    <%@ include file="../jsp/footer.jsp" %>
 </div>
 
 </body>

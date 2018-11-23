@@ -152,7 +152,7 @@ public class BankingController {
 
         }
 
-        currencyList.forEach(l -> System.out.println(l));
+        //currencyList.forEach(l -> System.out.println(l));
         model.addAttribute(currencyList);
         return "currency";
     }

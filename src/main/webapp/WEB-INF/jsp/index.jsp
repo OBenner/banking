@@ -51,6 +51,8 @@
         </div>
 
     </c:if>
+
+    <%@ include file="../jsp/footer.jsp" %>
 </div> <!-- /container -->
 
 
