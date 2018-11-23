@@ -11,6 +11,8 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.sql.DataSource;
@@ -21,56 +23,48 @@ public class BankingConfig  extends WebSecurityConfigurerAdapter {
 
 
     @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    DataSource dataSource;
 
-    @Qualifier("dataSource")
+    // Enable jdbc authentication
     @Autowired
-    private DataSource dataSource;
-
-    @Value("${spring.queries.users-query}")
-    private String usersQuery;
-
-    @Value("${spring.queries.roles-query}")
-    private String rolesQuery;
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth)
-            throws Exception {
-        auth.
-                jdbcAuthentication()
-                .usersByUsernameQuery(usersQuery)
-                .authoritiesByUsernameQuery(rolesQuery)
-                .dataSource(dataSource)
-                .passwordEncoder(bCryptPasswordEncoder);
+    public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
+        auth.jdbcAuthentication().dataSource(dataSource);
     }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    @SuppressWarnings("deprecation")
+    @Bean
+    public static NoOpPasswordEncoder passwordEncoder() {
+        return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
+    }
 
-        http.
-                authorizeRequests()
-                .antMatchers("/").permitAll()
-                .antMatchers("/login").permitAll()
-                .antMatchers("/registration").permitAll()
-                .antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
-                .authenticated().and().csrf().disable().formLogin()
-                .loginPage("/login").failureUrl("/login?error=true")
-                .defaultSuccessUrl("/admin/home")
-                .usernameParameter("email")
-                .passwordParameter("password")
-                .and().logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/").and().exceptionHandling()
-                .accessDeniedPage("/access-denied");
+    @Bean
+    public JdbcUserDetailsManager jdbcUserDetailsManager() throws Exception {
+        JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager();
+        jdbcUserDetailsManager.setDataSource(dataSource);
+
+        return jdbcUserDetailsManager;
     }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web
-                .ignoring()
-                .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
+        web.ignoring().antMatchers("/resources/**");
     }
 
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+             //   .antMatchers("/index").permitAll()
+                .antMatchers("/**").permitAll()
+             //   .antMatchers("/welcome").hasAnyAuthority("USER", "ADMIN")
+                //.antMatchers("/getEmployees").hasAnyAuthority("USER", "ADMIN")
+              //  .antMatchers("/addNewEmployee", "/updateEmployee", "/editEmployee/*", "/deleteEmployee/*").hasAnyAuthority("ADMIN")
+                .anyRequest()
+                .authenticated().and().formLogin()
+                .loginPage("/login").permitAll().and().logout().permitAll().and()
+                .exceptionHandling().accessDeniedPage("/accessdenied");
+
+        http.csrf().disable();
+    }
 
 
 }
