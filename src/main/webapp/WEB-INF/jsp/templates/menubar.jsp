@@ -27,7 +27,7 @@
                            aria-haspopup="true" aria-expanded="false">Account<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="/info">Information</a></li>
-                            <li><a href="#">Another action</a></li>
+                            <li><a href="/createAcc">Create account</a></li>
                             <li><a href="#">Something else here</a></li>
                             <li role="separator" class="divider"></li>
                             <li class="dropdown-header">Nav header</li>

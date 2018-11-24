@@ -24,29 +24,27 @@
 <div class="container">
 
 
-        <%@ include file="templates/menubar.jsp" %>
+    <%@ include file="templates/menubar.jsp" %>
 
 
-<table class="table table-striped table-hover">
-    <thead>
-    <tr class="bg-success">
-        <th>сode</th>
-        <th>nominal</th>
-        <th>name</th>
-        <th>value</th>
-    </tr>
-    </thead>
-    <c:forEach items="${currencyList}" var="currency">
-        <tr>
-            <td>${currency.сode}</td>
-            <td>${currency.nominal}</td>
-            <td>${currency.name}</td>
-            <td>${currency.value} RUB</td>
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr class="bg-success">
+            <th>сode</th>
+            <th>nominal</th>
+            <th>name</th>
+            <th>amount</th>
         </tr>
-    </c:forEach>
-
-
-</table>
+        </thead>
+        <c:forEach items="${currencyList}" var="currency">
+            <tr>
+                <td>${currency.сode}</td>
+                <td>${currency.nominal}</td>
+                <td>${currency.name}</td>
+                <td>${currency.value} RUB</td>
+            </tr>
+        </c:forEach>
+    </table>
 
     <%@ include file="templates/footer.jsp" %>
 </div>

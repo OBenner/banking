@@ -48,7 +48,7 @@
 				<input type="password" id="password" name="password" class="form-control" />
 			</div>
 			<input type="submit" value="Submit" class="btn btn-default">
-			<%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />--%>
+			<%--<input type="hidden" name="${_csrf.parameterName}" amount="${_csrf.token}" />--%>
 		</form>
 	</div> <!-- /container -->
 	<%@ include file="templates/footer.jsp" %>

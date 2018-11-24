@@ -3,6 +3,7 @@ package ru.neoflex.banking.dao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +18,6 @@ public class UserDao {
     private JdbcTemplate jdbcTemplate;
 
 
-
     @Transactional(readOnly = true)
     public User findUserByName(String name) {
         if (name == null) {
@@ -25,12 +25,12 @@ public class UserDao {
         }
         try {
             return (User) jdbcTemplate.queryForObject(
-                    "select  users.username, users.phone, users.email from users  where users.username = ?", new Object[] { name }, new UserRowMapper());
+                    "select  users.username, users.phone, users.email from users  where users.username = ?", new Object[]{name}, new BeanPropertyRowMapper(User.class));
         } catch (EmptyResultDataAccessException notFound) {
             return null;
         }
-    }
 
+    }
 
 
 }

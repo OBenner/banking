@@ -15,8 +15,9 @@ create table users (
 
 create table accounts (
     username varchar(50) not null,
+    code varchar(50) not null,
     accountNumber varchar(50) not null,
-    value DOUBLE,
+    amount DOUBLE,
     foreign key (username) references users (username)
 );
 

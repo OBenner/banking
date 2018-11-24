@@ -4,7 +4,7 @@
 
 
     <!-- Footer Content -->
-    <footer>
+    <footer class="py-5 bg-dark">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
