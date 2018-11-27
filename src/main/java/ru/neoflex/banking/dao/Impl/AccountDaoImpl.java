@@ -67,7 +67,7 @@ public class AccountDaoImpl implements AccountDao {
     }
 
     public void updateAccount(String accauntNumber, double amount) {
-        String sql = "UPDATE accounts set amount = ? WHERE accauntNumber = ?";
+        String sql = "UPDATE accounts set amount = ? WHERE accountNumber = ?";
         jdbcTemplate.update(sql, amount, accauntNumber);
         log.info("update account : {}", accauntNumber);
     }

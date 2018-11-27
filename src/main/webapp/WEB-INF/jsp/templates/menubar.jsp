@@ -28,6 +28,7 @@
                         <ul class="dropdown-menu">
                             <li><a href="/info">Information</a></li>
                             <li><a href="/createAcc">Create account</a></li>
+                             <li><a href="/transfer">Transfers</li>
                             <li><a href="#">Something else here</a></li>
                             <li role="separator" class="divider"></li>
                             <li class="dropdown-header">Nav header</li>
@@ -36,6 +37,9 @@
                         </ul>
                     </li>
                 </c:if>
+
+
+
             </ul>
 
 

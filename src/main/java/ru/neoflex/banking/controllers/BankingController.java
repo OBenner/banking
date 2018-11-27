@@ -141,4 +141,47 @@ public class BankingController {
         return new ModelAndView("createAcc", "accCode", CurrencyEnum.values());
     }
 
+    @RequestMapping(value = "/transfer", method = RequestMethod.GET)
+    public String getTransferInfo(Model model) {
+
+        User user = context.getCurrentUser();
+        List<Account> accounts = accountService.getAccounts(user.getUsername());
+
+        model.addAttribute("user", user);
+        model.addAttribute("accounts", accounts);
+
+        return "transfer";
+    }
+
+
+    @RequestMapping(value = "/transfer", method = RequestMethod.POST)
+    public ModelAndView processTransfer(@RequestParam(name = "accountFrom", required = true) String accountFrom,
+                                  @RequestParam(name = "accountTo", required = true) String accountTo,
+                                  @RequestParam(name = "changeAmount", required = true) String changeAmount,
+                                  Model model) {
+
+        Account accFrom =  accountService.getAccount(accountFrom);
+        Account accTo   =  accountService.getAccount(accountTo);
+
+        double Amount = Double.parseDouble(changeAmount);
+
+        //если на счете списания недостаточно средств
+        if ((accFrom.getAmount() - Amount) >= 0) {
+            try
+            {
+                accountService.updateAccount(accountFrom, accFrom.getAmount() - Amount);
+                accountService.updateAccount(accountTo, accTo.getAmount() + Amount);
+                return new ModelAndView("redirect:/info");
+            }
+            catch (Exception e)
+            {
+                model.addAttribute("error", "другая ошибка " + e.getMessage());
+            }
+        }
+        else
+            model.addAttribute("error", "На счете "+accFrom.getAccountNumber() + " недостаточно средств.");
+
+        return new ModelAndView("/error");
+    }
+
 }
