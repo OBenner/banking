@@ -32,19 +32,19 @@ public class AccountService {
 
     }
 
-    public void updateAccount(String accauntNumber, double amount) {
-        accountDao.updateAccount(accauntNumber, amount);
+    public void updateAccount(String accountNumber, double amount) {
+        accountDao.updateAccount(accountNumber, amount);
     }
 
     public void deleteAccount(String accountNumber) {
         accountDao.deleteAccount(accountNumber);
     }
 
-    public void transferAmount(String fromAcc, String toAcc, double amountTransfer) {
-
-    }
-
     public List<Account> getAccounts(String userName) {
         return accountDao.getUserAccounts(userName);
+    }
+
+    public Account getAccount(String accountNumber) {
+        return accountDao.getAccount(accountNumber);
     }
 }

@@ -11,7 +11,7 @@ public interface AccountDao {
 
     List<Account> getUserAccounts(String userName);
 
-    void updateAccount(String accauntNumber, double amount);
+    void updateAccount(String accountNumber, double amount);
 
     void createAccount(Account account);
 
